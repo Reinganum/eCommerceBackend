@@ -31,12 +31,18 @@ class ContainerFS{
             return obj
         }
         catch{
-            throw new Error (`error, no se pudo agregar objeto:`)
+            throw new Error (`error, no se pudo agregar objeto: ${obj}`)
         }
     }
     async getById(id){
-        let arrProductos= await this.getAll()
-        return arrProductos.find(item=>(item.id)===(id))
+        try{
+            let arrProductos= await this.getAll()
+            return arrProductos.find(item=>(item.id)===(id))
+        }
+        catch{
+            throw new Error (`error, no se encontrar el objeto con id: ${id}`)
+        }
+        
     }
     async updateById(id, newData){
         try {
@@ -72,6 +78,13 @@ class ContainerFS{
             console.log(error);
           }
     }
+    async deleteAll() {
+        try {
+          await fs.promises.writeFile(this.filePath, JSON.stringify([], null, 3));
+        } catch (error) {
+          console.log(error);
+        }
+      }
 }
 
 export {ContainerFS}

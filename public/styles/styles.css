@@ -1,3 +1,8 @@
 #productContainer{
     background-color: white;
 }
+
+.fa-shopping-cart{
+    color: white;
+    font-size: 64px;
+}

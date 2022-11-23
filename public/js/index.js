@@ -11,6 +11,16 @@ let productContainer=document.getElementById("productContainer")
 let displayProductsBtn=document.getElementById("displayProductsBtn")
 
 
+// DOM CART
+
+let createCartBtn=document.getElementById("createCartBtn")
+let cartContainer=document.getElementById("cartContainer")
+let cartId=document.getElementById("cartId")
+let productId=document.getElementById("productId")
+let addToCart=document.getElementById("addToCart")
+
+// FORMULARIO DE INGRESO DE PRODUCTOS 
+
 // FORMULARIO DE INGRESO DE PRODUCTOS 
 
 const displayForm=async()=>{
@@ -39,7 +49,7 @@ const renderForm=async()=>{
     })
   };
 
-renderForm()
+  renderForm();
 
 // TARJETAS DE PRODUCTOS //
 
@@ -67,3 +77,34 @@ const renderProducts=async(products)=>{
     return templateCompiled({ products });
 }
 
+// MANEJO DEL CART
+
+createCartBtn.addEventListener('click',async ()=>{
+    try{
+        await fetch('/api/cart/',{method:'POST', body:'{}'}, )
+        let newCart=document.createElement('p')
+        newCart.setAttribute('class',"fa fa-shopping-cart")
+        cartContainer.appendChild(newCart)
+    }
+    catch{
+        alert("error creating cart")
+    }
+})
+
+addToCart.addEventListener('click',async()=>{
+    let cart=cartId.value;
+    let product=productId.value
+    try{
+        await fetch(`/api/cart/${cart}/products`,  {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"productId":product})
+          });
+    }
+    catch (error){
+        console.log(error)
+    }
+})

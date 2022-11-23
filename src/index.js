@@ -2,6 +2,7 @@ import express from 'express'
 import { productRouter, cartRouter} from './routers/index.js';
 import { config } from './config/index.js';
 
+
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

@@ -5,10 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://kit.fontawesome.com/1586ef086c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./styles/styles.css">
     <title>STARTING THE ECOMMCERCE</title>
 </head>
 <body>
+    <div></div>
+        <button id="createCartBtn">Create Cart</button>
+        <label for="cartId">Cart ID</label>
+        <input type="number" name="cartId" id="cartId">
+        <label for="productId"> Product ID</label>
+        <input type="number" name="productId" id="productId"> 
+        <button id="addToCart">Add product to cart</button>
+    </div>
+    <div id="cartContainer"></div>
     <div id="container"></div>
     <button id="displayProductsBtn">DISPLAY PRODUCTS</button>
     <div id="productContainer">
