@@ -1,2 +1,2 @@
 export {MongoService} from './mongoService/MongoService.js'
-export {connect} from './firebaseService/FirebaseService.js'
+export {db} from './firebaseService/FirebaseService.js'

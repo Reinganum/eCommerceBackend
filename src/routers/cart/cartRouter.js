@@ -1,7 +1,7 @@
 import {Router} from 'express'
-import { CartsDao,ProductDao,addLog} from '../../Dao/index.js'
-import { ERRORS_UTILS,JOI_VALIDATION,DATE_UTILS} from '../../utils/index.js';
-import { verifyRole } from '../../middlewares/validateRole.js';
+import { CartsDao,ProductDao} from '../../Dao/index.js'
+import { ERRORS_UTILS,DATE_UTILS} from '../../utils/index.js';
+
 
 const router = Router()
 

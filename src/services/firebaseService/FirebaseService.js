@@ -17,4 +17,6 @@ const connect = async() =>{
     }
 }
 
-export {connect}
+const db=await connect()
+
+export {db}

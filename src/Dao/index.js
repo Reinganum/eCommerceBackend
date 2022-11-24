@@ -1,11 +1,7 @@
 import {config} from "../config/index.js";
 import {MongoService } from "../services/index.js";
-import {ProductsFS} from './products/index.js'
-import {CartsMongo} from './cart/index.js'
-import {ProductsMongo} from './products/index.js'
-import { connect } from "../services/index.js";
-import { ProductsFirebase } from "./products/index.js";
-
+import {ProductsFS,ProductsMongo,ProductsFirebase} from './products/index.js'
+import {CartsMongo, CartsFirebase} from './cart/index.js'
 
 
 
@@ -44,15 +40,17 @@ const getSelectedDaos=()=>{
         }
         case "firebase":{
             return({
-                ProductDao: "esperando..."
+                ProductDao: new ProductsFirebase(),
+                CartDao: new CartsFirebase()
             })
         }
     }
 }
 
+const Fire=new ProductsFirebase()
+Fire.getAll()
+
 const {ProductDao, CartsDao} = getSelectedDaos()
 
-const addLog='a'
-
-export {ProductDao, CartsDao, addLog};
+export {ProductDao, CartsDao};
 

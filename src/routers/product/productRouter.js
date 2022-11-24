@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { ProductDao, addLog} from '../../Dao/index.js';
+import { ProductDao} from '../../Dao/index.js';
 import { verifyRole } from '../../middlewares/validateRole.js';
 import { ERRORS_UTILS,JOI_VALIDATION,DATE_UTILS} from '../../utils/index.js';
 const productRouter=Router()
@@ -8,7 +8,6 @@ productRouter.get('/', async (req,res)=>{
     const products = await ProductDao.getAll()
     if (!products) {
         let error = ERRORS_UTILS.MESSAGES.NO_PRODUCT
-        return addLog(error)
     }
     res.send(products)
 })
@@ -18,7 +17,6 @@ productRouter.get('/:id', async (req,res)=>{
     const product = await ProductDao.getById(Number(id))
     if (!product) {
         let error = ERRORS_UTILS.MESSAGES.NO_PRODUCT
-        return addLog(error)
     }
     res.send(product)
 })

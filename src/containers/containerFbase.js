@@ -1,55 +1,59 @@
+import {db} from '../services/index.js'
 
 class ContainerFireBase{
-    constructor(collection){
-        this.collection=collection;
+    constructor(table){
+        this.connection=db.collection(table)
     }
     async getAll(){
-        try{
-            const document=await this.collection.get()
-            return document.docs.map(doc =>{ return {...doc.data(), id:doc.id}} )
-        }
+        try
+            {
+            const document=await this.connection.get()
+            const data=document.docs.map(doc =>{ return {...doc.data(), id:doc.id}} )
+            console.log(data)
+            }
         catch(error){
             console.error(`Could not bring documents:${error}`);
         }
     }
     async save(obj){
-        try{
-            const document=this.collection.doc()
-            await document.create(obj)
+        try
+            {
+            const document=this.connection.doc()
+            document.create(obj)
             console.log("object created!")
-        }
-        catch(error){
-            console.error(`Could not save object:${error}`);
-        }
+            }
+        catch(error)
+            {
+                console.error(`Could not save object:${error}`);
+            }
     }
     async getById(id){
-        try{
-            const document=await this.collection.doc(id).get()
-            return document.data()
+        try
+        {
+            const document=await this.connection.doc(id).get()
+            console.log(document.data()) 
         }
         catch(error){
             console.error(`Could not bring document:${error}`);
         }
     }
     async updateById(id,newData){
-        try{
-            const document=this.collection.doc(id)
-            await document.update(newData)
-            console.log("updated")
-        }
+        try
+            {
+            this.connection.doc(id).update(newData)
+            console.log(`document with id: ${id} updated`)
+            }
         catch(error){
             console.error(`Could not update documents:${error}`);
-        }
+            }
     }
-    async remove(id){
+    async deleteById(id){
         try{
-            const document=this.collection.doc(id)
-            await document.delete()
-            console.log("eliminated!")
-    
+            this.connection.doc(id).delete()
+            console.log(`document with id: ${id}, deleted successfully`)
         }
-        catch(e){
-            console.error(`Could not eliminate the document:${error}`);
+        catch(error){
+            console.error(`Could not bring document:${error}`);
         }
     }
 }

@@ -1,10 +1,7 @@
 import { ContainerFireBase } from "../../containers/index.js";
 
-export class ProductsFirebase extends ContainerFireBase{
+export class CartsFirebase extends ContainerFireBase{
     constructor(){
-        super("products")
+        super("carts")
     }
 }
-
-
-
