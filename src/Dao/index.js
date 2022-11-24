@@ -1,8 +1,7 @@
 import {config} from "../config/index.js";
-import {MongoService } from "../services/index.js";
-import {ProductsFS,ProductsMongo,ProductsFirebase} from './products/index.js'
-import {CartsMongo, CartsFirebase} from './cart/index.js'
-
+import {MongoService} from "../services/index.js";
+import {ProductsFS,ProductsMongo,ProductsSql,ProductsFirebase} from './products/index.js'
+import {CartsMongo,CartSql,CartsFirebase} from './cart/index.js'
 
 
 /* PRODUCTOS
@@ -22,33 +21,39 @@ const addLog= async (error)=>{
 }
 */
 
-const SELECTED_DATABASE="mongo"
+const SELECTED_DATABASE="firebase"
 
 const getSelectedDaos=()=>{
     switch(SELECTED_DATABASE){    
         case "mongo": {
-            MongoService.init();
+            MongoService.init()
+            console.log('connected to mongo atlas Database')
             return ({
                 ProductDao: new ProductsMongo(),
                 CartDao: new CartsMongo()
             })
         }
         case "fs":{
+            console.log('connected to Filesystem as memory');
             return({
                 ProductDao: new ProductsFS()
              })
         }
         case "firebase":{
+            console.log('connected to Firebase');
             return({
                 ProductDao: new ProductsFirebase(),
                 CartDao: new CartsFirebase()
             })
         }
+        case "sql":{
+            console.log('connected to Sql');
+            return({
+                ProductDao: new ProductsSql(),
+            })
+        }
     }
 }
-
-const Fire=new ProductsFirebase()
-Fire.getAll()
 
 const {ProductDao, CartsDao} = getSelectedDaos()
 

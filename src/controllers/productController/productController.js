@@ -1,28 +1,26 @@
-import {Router} from 'express';
-import { ProductDao} from '../../Dao/index.js';
-import { verifyRole } from '../../middlewares/validateRole.js';
-import { ERRORS_UTILS,JOI_VALIDATION,DATE_UTILS} from '../../utils/index.js';
-const productRouter=Router()
 
-productRouter.get('/', async (req,res)=>{
+import { ProductDao} from '../../Dao/index.js';
+import { ERRORS_UTILS,JOI_VALIDATION,DATE_UTILS} from '../../utils/index.js';
+
+
+const getAll=async(req,res)=>{
     const products = await ProductDao.getAll()
     if (!products) {
         let error = ERRORS_UTILS.MESSAGES.NO_PRODUCT
     }
     res.send(products)
-})
+}
 
-productRouter.get('/:id', async (req,res)=>{
+const getById=async(req,res)=>{
     const {id}=req.params
     const product = await ProductDao.getById(id)
     if (!product) {
         let error = ERRORS_UTILS.MESSAGES.NO_PRODUCT
     }
     res.send(product)
-})
+}
 
-
-productRouter.post('/',verifyRole, async (req,res)=>{
+const create = async(req,res)=>{
     try{
         const {title,description,code,thumbnail,price,stock} = req.body;
         const product= await JOI_VALIDATION.productTemplate.validateAsync({title,description,code,thumbnail,price,stock,timestamp:DATE_UTILS.getTimestamp()})
@@ -32,9 +30,9 @@ productRouter.post('/',verifyRole, async (req,res)=>{
     catch(error){
         res.send(error)
     } 
-})
+}
 
-productRouter.delete('/:id',verifyRole, async (req,res)=>{
+const remove = async (req,res)=>{
     try{
         const {id}=req.params;
         await ProductDao.deleteById(id)
@@ -43,9 +41,9 @@ productRouter.delete('/:id',verifyRole, async (req,res)=>{
     catch (error){
         res.send(error)
     }
-})
+}
 
-productRouter.put('/:id',verifyRole,async(req,res)=>{
+const update=async(req,res)=>{
     try{
         const {id}=req.params;
         await ProductDao.updateById((id),req.body)
@@ -54,6 +52,6 @@ productRouter.put('/:id',verifyRole,async(req,res)=>{
     catch (error){
         res.send(error)
     }
-})
+}
 
-export {productRouter}
+export const productController = {getAll,getById,create,remove,update}

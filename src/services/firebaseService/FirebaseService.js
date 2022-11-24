@@ -9,7 +9,6 @@ admin.initializeApp({
 const connect = async() =>{
     try{
         const db=admin.firestore();
-        console.log(`we have established connection with Firebase :) !`)
         return db
     }
     catch(error){
